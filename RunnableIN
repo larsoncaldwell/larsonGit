@@ -1,0 +1,26 @@
+import javax.swing.*;
+
+public class RunnableIN
+{
+   JButton toStart;
+   JList threadsIN;
+   JLabel labelIN;
+
+   private RunnableIN()
+   {
+      toStart = new JButton("Start");
+      threadsIN = new JList();
+      labelIN = new JLabel("These are the input commands");
+      toStart.addActionListener(this);
+   }
+
+   public RunnableIN getInstance()
+   {
+      return this;
+   }
+   
+   public void actionPerformed(ActionEvent event)
+   {
+      button.setText("Its Begun!");
+   }
+}
