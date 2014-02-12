@@ -1,5 +1,6 @@
 import java.awt.event.*;
 import javax.swing.*;
+import java.awt.*;
 
 public class Glory
  implements ActionListener
@@ -26,7 +27,8 @@ public class Glory
 
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-      frame.getContentPane().add(button);
+      //frame.getContentPane().add(button);
+      //frame.getContentPane().add(enter);
 
       frame.setSize(400,500);
 
