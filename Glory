@@ -1,0 +1,23 @@
+import javax.swing.*;
+
+public class Glory
+{
+   public static void main(String[] args)
+   {
+      new Glory().run();
+   }
+
+   public void run()
+   {
+      JFrame frame = new JFrame();
+      JButton button = new JButton("click me");
+
+      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+      frame.getContentPane().add(button);
+
+      frame.setSize(200,400);
+
+      frame.setVisible(true);
+   }
+}
