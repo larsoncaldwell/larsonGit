@@ -2,10 +2,10 @@ public class Advent
 {
    public static void main(String[] args)
    {
-      new Advent().run();
+      new Advent().start();
    }
 
-   public void run()
+   public void start()
    {
       RustySword rustSword = new RustySword();
       MagicWand theWand = new MagicWand();
