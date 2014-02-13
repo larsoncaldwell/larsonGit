@@ -1,8 +1,9 @@
 import java.awt.event.*;
 import javax.swing.*;
+import org.openide.nodes.Node;
 
 public class RunnableOUT
-   implements ActionListener
+   extends Node
 {
    JButton toStop;
    JList threadsOUT;

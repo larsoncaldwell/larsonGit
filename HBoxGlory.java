@@ -8,14 +8,31 @@ public class HBoxGlory
 {
    JTextField enter;
    JLabel labelEnter;
+   Runnable mRunable;
+   RunnableThread mRunnableThread;
    
    public static void main(String[] args)
    {
       new HBoxGlory().run();
    }
 
+   public void start()
+   {
+      mRunnableThread.add(mRunnable);
+      while(mRunnable.isRunning())
+      {
+         //keep runnables running
+      }
+   }
+
+   public void stop()
+   {
+      mRunnableThread.remove();
+   }
+
    public void actionPerformed(ActionEvent event)
    {
+       event.consume();
    }
 
    public void run()
