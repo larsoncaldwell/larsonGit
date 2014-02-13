@@ -4,7 +4,6 @@ import java.awt.*;
 import javafx.scene.layout.HBox;
 
 public class HBoxGlory
-   implements ActionListener
 {
    JTextField enter;
    JLabel labelEnter;
@@ -30,10 +29,6 @@ public class HBoxGlory
       mRunnableThread.remove();
    }
 
-   public void actionPerformed(ActionEvent event)
-   {
-       event.consume();
-   }
 
    public void run()
    {
@@ -49,5 +44,23 @@ public class HBoxGlory
       frame.setSize(400,500);
 
       frame.setVisible(true);
+   }
+   
+   public class StartActionListener
+      implements ActionListener
+   {
+      public void actionPerformed(ActionEvent event)
+      {
+         //start the runnable
+      }
+   }
+   
+   public class StopActionListener
+      implements ActionListener
+   {
+      public void actionPerformed(ActionEvent event)
+      {
+         //stop the runnable
+      }
    }
 }
