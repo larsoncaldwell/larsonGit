@@ -24,8 +24,8 @@ public class RunnableIN
       return cInstance;
    }
    
-   public void actionPerformed(ActionEvent event)
-   {
-      toStart.setText("Its Begun!");
-   }
+    //public void actionPerformed(ActionEvent event)
+   //{
+       //toStart.setText("Its Begun!");
+      //}
 }
