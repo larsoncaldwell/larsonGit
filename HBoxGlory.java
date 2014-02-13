@@ -3,15 +3,19 @@ import javax.swing.*;
 import java.awt.*;
 import javafx.scene.layout.HBox;
 
-public class Glory
- implements ActionListener
+public class HBoxGlory
+   implements ActionListener
 {
    JTextField enter;
    JLabel labelEnter;
    
    public static void main(String[] args)
    {
-      new Glory().run();
+      new HBoxGlory().run();
+   }
+
+   public void actionPerformed(ActionEvent event)
+   {
    }
 
    public void run()
@@ -20,8 +24,8 @@ public class Glory
       labelEnter = new JLabel("Enter Here:");
       
       HBox hbox = new HBox(10);
-      hbox.getCildren().addAll(RunnableIN().getInstance(),
-                               RunnableOUT().getInstance());
+      hbox.getChildren().addAll(RunnableIN.getInstance(),
+                                RunnableOUT.getInstance());
 
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

@@ -1,10 +1,14 @@
+import java.awt.event.*;
 import javax.swing.*;
 
 public class RunnableIN
+   implements ActionListener
 {
    JButton toStart;
    JList threadsIN;
    JLabel labelIN;
+
+   private static RunnableIN cInstance = new RunnableIN();
 
    private RunnableIN()
    {
@@ -14,13 +18,13 @@ public class RunnableIN
       toStart.addActionListener(this);
    }
 
-   public RunnableIN getInstance()
+   public static RunnableIN getInstance()
    {
-      return this;
+      return cInstance;
    }
    
    public void actionPerformed(ActionEvent event)
    {
-      button.setText("Its Begun!");
+      toStart.setText("Its Begun!");
    }
 }
