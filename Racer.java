@@ -1,26 +1,38 @@
 import java.io.File;
-import java.util.Timer;
-import java.swing.*;
+import javax.swing.*;
+import java.awt.event.*;
 
 public class Racer
     extends Thread 
+    implements ActionListener
 {
    private int mFileNumber;
-   private boolean mTimeToDelete;
+   private boolean mCreating;
    private Thread mThreadRunner;
    private Thread mThreadDeleter;
-   private Thread mThreadMonitor;
+   private FileToucher mThreadMonitor;
    
    public Racer()
    {
       mFileNumber = 0;
-      mThreadRunner = new Thread();
-      mThreadDeleter = new Thread();
-      mThreadMonitor = new Thread();
+      mThreadRunner = new Racer(true);
+      mThreadDeleter = new Racer(false);
+      mThreadMonitor = new OutputingFileToucher();
 
-      mThreadRunner.start();
-      mThreadDeleter.start();
-      mThreadMonitor.start();
+      startRace();
+   }
+
+   public Racer(boolean pCreating)
+   {
+      mCreating = pCreating;
+   }
+
+   public void startRace()
+   {
+       mThreadRunner.start();
+       Thread.sleep(500);
+       mThreadDeleter.start();
+       new Timer(1000, this).start();
    }
    
    public File newFileN(int number)
@@ -32,30 +44,26 @@ public class Racer
    {
       while (true)
       {
-          //TimerTask timer = new TimerTask()
-	      //{
-             
-	      //};
-	  //new Timer().schedule(timer, 1000);
-
          try
 	 {
-	    if (!(mTimeToDelete) && (newFileN(mFileNumber).createNewFile()))
-	    {
-	       mFileNumber++;
-            }
-            else if (newFileN(mFileNumber).delete())
+	    if ((mCreating && newFileN(mFileNumber).createNewFile())
+                 || (!(mCreating) && NewFileN(mFileNumber).delete()))
 	    {
 	       mFileNumber++;
 	    }
-	    Thread.sleep(250);
 	 }
          catch (Exception e)
 	 {
+	     System.out.println("never call me");
          }
       }
    }
-   
+
+   public void actionPerformed(ActionEvent e)
+   {
+       System.out.println("oh no");
+   }
+
    public static void main(String[] args)
    {
       new Racer().start();
