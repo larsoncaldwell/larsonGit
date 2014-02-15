@@ -2,22 +2,30 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
 import javafx.scene.layout.VBox;
-import javafx.geometry.Pos;
+//import javafx.geometry.Pos;
+
+import javafx.application.Application;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 public class VBoxGlory
+   extends Application
 {
-    //JTextField enter;
-    //JLabel labelEnter;
+    TextField enter = new TextField();
+    Label labelEnter = new Label("Enter Runnables:");
    //Runnable mRunable;
    //RunnableCollection mRunnableCollection;
-   VBox mVBox;
+   //VBox mVBox;
    
    public static void main(String[] args)
    {
-      new VBoxGlory().run();
+       launch(args);
    }
 
-   public void start()
+   public void begin()
    {
        //mRunnableThread.add(mRunnable);
        //while(mRunnable.isRunning())
@@ -31,8 +39,27 @@ public class VBoxGlory
        //mRunnableThread.remove();
    }
 
-   public void run()
+   public void start(final Stage primaryStage)
    {
+       BorderPane theBorder = new BorderPane();
+       RunnableNode mRunnableIN  = new RunnableNode("The Input", "Start");
+       RunnableNode mRunnableOUT = new RunnableNode("The Output", "Stop"); 
+
+       theBorder.setLeft(mRunnableIN);
+       theBorder.setRight(mRunnableOUT);
+       theBorder.setTop(labelEnter);
+       theBorder.setTop(enter);
+
+       Scene theScene = new Scene(theBorder, 1000, 500);
+
+       primaryStage.setScene(theScene);
+       primaryStage.setTitle("This is a test");
+       primaryStage.show();
+
+
+
+
+       /**
       RunnableNode mRunnableIN  = new RunnableNode("The Input", "Start");
       RunnableNode mRunnableOUT = new RunnableNode("The Output", "Stop");
       EnterNode mEnter = new EnterNode("Enter Here:");
@@ -47,6 +74,7 @@ public class VBoxGlory
       mVBox.setAlignment(Pos.TOP_CENTER);
 
       //mVBox.setVgrow(mRunnableOUT, Priority.ALWAYS);
+      */
    }
 
    public class StartActionListenter
