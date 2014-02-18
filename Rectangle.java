@@ -1,4 +1,8 @@
+import java.awt.Color;
+
 public interface Rectangle
 {
-    public int[] getSides();
+    public ShapeDimension getSides();
+    public ShapeCoordinate getCoordinate();
+    public Color getColor();
 }
