@@ -2,7 +2,10 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
 import javafx.scene.layout.VBox;
-//import javafx.geometry.Pos;
+import javafx.scene.layout.HBox;
+import javafx.geometry.Pos;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Priority;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -18,7 +21,12 @@ public class VBoxGlory
     Label labelEnter = new Label("Enter Runnables:");
    //Runnable mRunable;
    //RunnableCollection mRunnableCollection;
-   //VBox mVBox;
+   VBox mVBox;
+
+    ActionHandeler mStartPush;
+
+    ActionHandler mStopPush;
+   
    
    public static void main(String[] args)
    {
@@ -42,39 +50,48 @@ public class VBoxGlory
    public void start(final Stage primaryStage)
    {
        BorderPane theBorder = new BorderPane();
-       RunnableNode mRunnableIN  = new RunnableNode("The Input", "Start");
-       RunnableNode mRunnableOUT = new RunnableNode("The Output", "Stop"); 
+       RunnableNode runnableIN  = new RunnableNode("The Input", "Start");
+       RunnableNode runnableOUT = new RunnableNode("The Output", "Stop"); 
 
-       theBorder.setLeft(mRunnableIN);
-       theBorder.setRight(mRunnableOUT);
-       theBorder.setTop(labelEnter);
-       theBorder.setTop(enter);
+       HBox topInfo = new HBox();
 
-       Scene theScene = new Scene(theBorder, 1000, 500);
+       enter.setPrefSize(250, 25);
+       topInfo.getChildren().add(labelEnter);
+       topInfo.getChildren().add(enter);
+       topInfo.setAlignment(Pos.CENTER);
+       topInfo.setSpacing(10);
+       topInfo.setHgrow(topInfo, Priority.ALWAYS);
+
+       theBorder.setLeft(runnableIN);
+       theBorder.setRight(runnableOUT);
+       theBorder.setTop(topInfo);
+
+       Scene theScene = new Scene(theBorder, 550, 500);
+
+
+       mStartPush =
+          new ActionHandler<actionEvent>()
+          {
+	     public void handle(ActionEvent event)
+	     {
+	        begin();
+	     }
+          };
+
+       mStopPush =
+          new ActionHandler<actionEvent>()
+          {
+             public void handle(ActionEvent event)
+             {
+	        stop();
+             }
+          };
+
+
 
        primaryStage.setScene(theScene);
        primaryStage.setTitle("This is a test");
        primaryStage.show();
-
-
-
-
-       /**
-      RunnableNode mRunnableIN  = new RunnableNode("The Input", "Start");
-      RunnableNode mRunnableOUT = new RunnableNode("The Output", "Stop");
-      EnterNode mEnter = new EnterNode("Enter Here:");
-
-      mVBox.getChildren().addAll(mRunnableIN, mRunnableOUT);
-
-      mVBox.setMargin(mRunnableIN, new Insets(10, 10, 10 ,10));
-      mVBox.setAlignment(Pos.CENTER_LEFT);
-      mVBox.setMargin(mRunnableOUT, new Insets(20, 20, 20 ,20));
-      mVBox.setAlignment(Pos.CENTER_RIGHT);
-      mVBox.setMargin(mEnter, new Insets(5, 5, 5 ,5));
-      mVBox.setAlignment(Pos.TOP_CENTER);
-
-      //mVBox.setVgrow(mRunnableOUT, Priority.ALWAYS);
-      */
    }
 
    public class StartActionListenter
@@ -82,7 +99,7 @@ public class VBoxGlory
    {
        public void actionPerformed(ActionEvent event)
        {
-	   //start the runnable
+	   //add app to the runnable
        }
    }
 
@@ -91,7 +108,7 @@ public class VBoxGlory
    {
        public void actionPerformed(ActionEvent event)
        {
-           //stop the runnable
+           //remove app from the runnable
        }
    }
 }
