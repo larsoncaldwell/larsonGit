@@ -26,6 +26,8 @@ import javafx.scene.control.SelectionMode;
 public class VBoxGlory
    extends Application
 {
+    private static VBoxGlory cInstance = null;
+
     private TextField mEnter;
    private Label mLabel;
    private VBox mVBox;
@@ -44,11 +46,26 @@ public class VBoxGlory
 
    private HBox mTopBox = new HBox();
 
+    public VBoxGlory()
+    {
+	super();
+        synchronized (VBoxGlory.class)
+        {
+	    if (cInstance != null)
+	    {
+	       throw new UnsupportedOperationException(
+	          getClass() + " is a singleton. The constructor should be called only once.");
+	    }
+            cInstance = this;
+	}
+    }
    
    public static void main(String[] args)
    {
        launch(args);
    }
+
+
 
     public void enterRunnable()
     {
@@ -187,38 +204,20 @@ public class VBoxGlory
         return t;
     }
 
-    public boolean isRunning(Runnable pRunnable)
+    public boolean isRunning()
     {
-	return mRunnableOUT.inList(pRunnable.getClass().getName());
+	return (isRunning(Thread.currentThread()));
     }
 
+    public boolean isRunning(Thread pRunnable)
+    {
+	return mRunnableOUT.inList(pRunnable.getName());
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public static VBoxGlory getInstance()
+    {
+        return cInstance;
+    }
 
     private void showMessage(String pFirstText, String pSecondText)
     {

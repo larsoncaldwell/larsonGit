@@ -2,17 +2,17 @@ import java.util.*;
 
 
 public class HelloApp
-   implements Runnable
+  implements Runnable
+	     //extends Thread
 {
    public void run()
    {
-       VBoxGlory host = new VBoxGlory();
-       while (host.isRunning(this))
+       while (VBoxGlory.getInstance().isRunning())
       {
          try 
          {
-            Thread.sleep(100); 
-            System.out.println("Hello everyone");
+	    System.out.println("Hello everyone");
+            Thread.sleep(1000); 
          }
          catch (Exception e)
          {
