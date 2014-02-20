@@ -1,7 +1,3 @@
-// implements runnable
-// void run()
-//for the runnables: while (VBoxGlory.getInstance().isThreadRunning())
-//  try {thread.sleep(100); dosomething();}
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
@@ -21,6 +17,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.Group;
+//import javafx.scene.control.Dialogs;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -53,27 +50,14 @@ public class VBoxGlory
        launch(args);
    }
 
-   public void begin()
-   {
-       System.out.println("I am started");
-       //mRunnableThread.add(mRunnable);
-       //while(mRunnable.isRunning())
-       //{
-         //keep runnables running
-       //}
-   }
-
-   public void stop()
-   {
-       System.out.println("I am stopped");
-       //mRunnableThread.remove();
-   }
-
     public void enterRunnable()
     {
         String runnableName = mEnter.getText();
         mEnter.setText("");
-        System.out.println(runnableName);
+        if (load(runnableName) && startThread())
+        {
+	    mRunnableOUT.requestButtonFocus();
+	}
     }
 
    public void start(final Stage pPrimaryStage)
@@ -84,7 +68,7 @@ public class VBoxGlory
        {
 	   public void handle(ActionEvent event)
 	   {
-	       begin();
+	       startThread();
 	   }
        };
 
@@ -93,7 +77,7 @@ public class VBoxGlory
        {
 	   public void handle(ActionEvent event)
 	   {
-	       stop();
+	       stopThread();
 	   }
        };
 
@@ -128,7 +112,7 @@ public class VBoxGlory
 	  {
 	      public void handle(ActionEvent event)
               {
-		  //enterRunnable();
+		  enterRunnable();
               }
 	  });
 
@@ -137,4 +121,108 @@ public class VBoxGlory
        mPrimaryStage.setTitle("This is the Glory");
        mPrimaryStage.show();
    }
+
+
+    private boolean load(String pName)
+    {
+        Class runnable = null;
+        boolean isRunnable = false;
+        try
+	{
+	    if ((pName != null) && (pName.length() > 0))
+	    {
+		runnable = Class.forName(pName);
+                isRunnable = Runnable.class.isAssignableFrom(runnable);
+                if (isRunnable)
+	        {
+		    mRunnableIN.push(runnable.getName());
+		}
+                else
+	        {
+		    throw new ClassCastException(pName + " is not a Runnable.");
+		}
+	    }
+        }
+        catch (Throwable t)
+	{
+	    showMessage("Error loading Runnable", t.toString());
+        }
+        return (runnable != null && isRunnable);
+    }
+
+    private boolean startThread()
+    {
+	String name = mRunnableIN.getSelectedItem();
+        Thread t = createThread(name);
+        if (t != null)
+        {
+	    mRunnableOUT.push(t.getName());
+            t.start();
+            return true;
+        }
+        return false;
+    }
+
+    private void stopThread()
+    {
+	mRunnableOUT.popAll();
+    }
+
+    private Thread createThread(String pName)
+    {
+	Thread t = null;
+        try
+        {
+	    Runnable r = (Runnable) Class.forName(pName).newInstance();
+            t = new Thread(r);
+            t.setName(r.getClass().getName() + t.getName());
+        }
+        catch (Exception e)
+	{
+	}
+        //if (t == null)
+	    //{
+	    //System.out.println("FATAL ERROR");
+	    //}
+        return t;
+    }
+
+    public boolean isRunning(Runnable pRunnable)
+    {
+	return mRunnableOUT.inList(pRunnable.getClass().getName());
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private void showMessage(String pFirstText, String pSecondText)
+    {
+        //Dialogs.showInformationDialog(mPrimaryStage, pFirstText, pSecondText, "Warning");
+        System.out.println(pFirstText + " " + " " + pSecondText + " ... Warning");
+    }
 }
