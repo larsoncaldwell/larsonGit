@@ -14,6 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.Group;
@@ -22,6 +23,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.SelectionMode;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class VBoxGlory
    extends Application
@@ -71,9 +74,9 @@ public class VBoxGlory
     {
         String runnableName = mEnter.getText();
         mEnter.setText("");
-        if (load(runnableName) && startThread())
+        if (load(runnableName))
         {
-	    mRunnableOUT.requestButtonFocus();
+	    mRunnableIN.requestButtonFocus();
 	}
     }
 
@@ -99,9 +102,9 @@ public class VBoxGlory
        };
 
 	mRunnableIN  = new RunnableNode("The Input", "Start",
-					SelectionMode.SINGLE, mEventPush);
+					SelectionMode.SINGLE, mEventPush, null);
 	mRunnableOUT = new RunnableNode("The Output", "Stop",
-					SelectionMode.MULTIPLE, mEventPop);
+					SelectionMode.MULTIPLE, mEventPop, null);
 
 	//mGroup = new Group();
        mBorder = new BorderPane();
@@ -136,6 +139,25 @@ public class VBoxGlory
        mPrimaryStage = pPrimaryStage;
        mPrimaryStage.setScene(mScene);
        mPrimaryStage.setTitle("This is the Glory");
+
+       mPrimaryStage.setOnCloseRequest(
+				       new EventHandler<WindowEvent>()
+				       {
+                                       public void handle(WindowEvent event)
+				       {
+					   event.consume();
+                                           try
+                                           {
+					       Platform.exit();
+                                               System.exit(0);
+                                           }
+                                           catch(Exception e)
+					   {
+					       System.out.println(e.getMessage());
+					   }
+				       }
+				       });
+
        mPrimaryStage.show();
    }
 
@@ -182,12 +204,12 @@ public class VBoxGlory
 
     private void stopThread()
     {
-	mRunnableOUT.popAll();
+        mRunnableOUT.popAll();
     }
 
     private Thread createThread(String pName)
     {
-	Thread t = null;
+        Thread t = null;
         try
         {
 	    Runnable r = (Runnable) Class.forName(pName).newInstance();
