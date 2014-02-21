@@ -27,10 +27,7 @@ public class RunnableNode
       mButton = new Button(pButtonName);
       mButton.setOnAction(pButtonEventHandler);
       mList = new ListView<String>();
-      if (pListItems != null);
-      {
-          //mList.setItems(pListItems);
-      }
+
       mList.getSelectionModel().setSelectionMode(pSelectionMode);
       mList.setPrefWidth(200);
       mLabel = new Label(pLabelName);
