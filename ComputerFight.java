@@ -120,7 +120,7 @@ public class ComputerFight
     {
         mCheater = false;
         mRoot = new Group();
-        mScene = new Scene(mRoot, 300, 300);
+        mScene = new Scene(mRoot, 500, 800);
         primaryStage.setScene(mScene);
 
         mSmash =
@@ -167,7 +167,7 @@ public class ComputerFight
         mCode = new Label("");
 
         mTries = new ListView<String>();
-        mTries.setPrefWidth(200);
+        mTries.setPrefWidth(300);
 
         mRock = new Button("ROCK");
 	mPaper = new Button("PAPER");
@@ -191,7 +191,7 @@ public class ComputerFight
         mButtons.setMargin(mRock, new Insets(50, 10, 10, 10));
 	mButtons.setMargin(mPaper, new Insets(10));
 	mButtons.setMargin(mCut, new Insets(10));
-        mButtons.setMargin(mCheat, new Insets(100, 10, 10, 10));
+        mButtons.setMargin(mCheat, new Insets(500, 10, 10, 10));
         mButtons.setMargin(mCode, new Insets(10));
 
         mList.setMargin(mLabel, new Insets(50, 10, 10, 10));
@@ -317,6 +317,8 @@ public class ComputerFight
 	mTries.getItems().add(result);
 
         reactions();
+
+        mCheater = false;
     }
 
     private void reactions()
@@ -326,6 +328,16 @@ public class ComputerFight
        if (mWin == 12)
        {
 	  reaction = "I will not play with you.";
+	  mTries.getItems().add(reaction);
+          try
+          {
+	      Thread.sleep(2500);
+	  }
+          catch (Exception e)
+          {
+	  }
+          Platform.exit();
+          System.exit(0);
        }
        else if (mWin == 10)
        {
@@ -342,15 +354,86 @@ public class ComputerFight
        else if (mWin == 5)
        {
           reaction = "Wow you're good!";
-       }  
+       }
+       else if (mWin == 3)
+       {
+          reaction = "Three in a row, not bad.";
+       }
 
-       mTries.getItems().add(reaction);
+       else if (mLose == 10)
+       {
+          reaction = "Whatever, I dont mind!";
+       }  
+       else if (mLose == 9)
+       {
+          reaction = "Are you trying to lose?";
+       }  
+       else if (mLose == 7)
+       {
+          reaction = "Wow!  Realy.";
+       }  
+       else if (mLose == 5)
+       {
+          reaction = "I'm on a roll!";
+       }
+       else if (mLose == 3)
+       {
+          reaction = "Yes!  Three in a row!";
+       } 
+
+       else if (mTie == 10)
+       {
+          reaction = "I cant take it anymore!";
+	  mTries.getItems().add(reaction);
+          try
+	  {
+	     Thread.sleep(2500);
+	  }
+          catch (Exception e)
+          {
+          }
+          Platform.exit();
+          System.exit(0);
+       }
+       else if (mTie == 9)
+       {
+          reaction = "Aw, stop it!.";
+       }
+       else if (mTie == 8)
+       {
+	  mTries.getItems().add("Alright heres what I'll do.");
+          reaction = "I'll use ROCK.  Dont use ROCK OK?";
+          mMove = 1;
+          mCheater = true;
+       }
+       else if (mTie == 7)
+       {
+          reaction = "Alright, stop this.";
+       }
+       else if (mTie == 5)
+       {
+          reaction = "Stop copying me!";
+       }
+       else if (mTie == 3)
+       {
+          reaction = "What's the big idea.";
+       }
+
+       if (reaction != "")
+       {
+          mTries.getItems().add(reaction);
+       }
     }
 
     private void check()
     {
-	mMove = (int)Math.ceil(Math.random()*3);
+        if (mCheater == false)
+        {
+           mMove = (int)Math.ceil(Math.random()*3);
+        }
+
         mCheater = true;
+
 	if (mMove == 1)
         {
            mTruth = "He will play rock.";

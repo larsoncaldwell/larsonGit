@@ -18,7 +18,7 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.Group;
-//import javafx.scene.control.Dialogs;
+import javafx.scene.control.Dialogs;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -243,7 +243,7 @@ public class VBoxGlory
 
     private void showMessage(String pFirstText, String pSecondText)
     {
-        //Dialogs.showInformationDialog(mPrimaryStage, pFirstText, pSecondText, "Warning");
-        System.out.println(pFirstText + " " + " " + pSecondText + " ... Warning");
+        Dialogs.showInformationDialog(mPrimaryStage, pFirstText, pSecondText, "Warning");
+        //System.out.println(pFirstText + " " + " " + pSecondText + " ... Warning");
     }
 }

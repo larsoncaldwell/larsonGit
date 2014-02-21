@@ -1,3 +1,4 @@
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
 import javafx.scene.layout.VBox;
@@ -20,11 +21,16 @@ public class RunnableNode
 
     public RunnableNode(String pLabelName, String pButtonName,
                         SelectionMode pSelectionMode, 
-                        EventHandler<ActionEvent> pButtonEventHandler)
+                        EventHandler<ActionEvent> pButtonEventHandler,
+                        ObservableList<String> pListItems)
    {
       mButton = new Button(pButtonName);
       mButton.setOnAction(pButtonEventHandler);
       mList = new ListView<String>();
+      if (pListItems != null);
+      {
+          //mList.setItems(pListItems);
+      }
       mList.getSelectionModel().setSelectionMode(pSelectionMode);
       mList.setPrefWidth(200);
       mLabel = new Label(pLabelName);
@@ -63,10 +69,6 @@ public class RunnableNode
 	if (inList(pApp))
         {
 	    mList.getItems().remove(pApp);
-	}
-        else
-        {
-	    System.out.println("No such file exists.  Cannot remove");
 	}
     }
 
