@@ -165,4 +165,9 @@ public class RunnableNode
    {
       mButton.requestFocus();
    }
+
+   public ListView getList()
+   {
+      return mList;
+   }
 }

@@ -18,12 +18,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.Dialogs;
 
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import javafx.stage.Stage;
 
 /**
  * This class has the purpose of accepting and running Runnable files.  It is
@@ -171,16 +172,16 @@ public class RunnableHost
          };
 
       // two VBoxes will be used for both the avalible and running applications
-      mRunnableIN  = new RunnableNode("The Input", "Start",
+      mRunnableIN  = new RunnableNode("Runnables", "Start",
 				      SelectionMode.SINGLE, mEventPush, null);
       
-      mRunnableOUT = new RunnableNode("The Output", "Stop",
+      mRunnableOUT = new RunnableNode("Running Threads", "Stop",
 				      SelectionMode.MULTIPLE, mEventPop, null);
 
       mBorder = new BorderPane();
 
       // top section initialization
-      mLabel = new Label("Enter Runnables:");
+      mLabel = new Label("Enter Runnable:");
       mEnter = new TextField("");
       mEnter.setPrefSize(250, 25);
 
@@ -319,7 +320,7 @@ public class RunnableHost
    /**
     * To stop a thread, simply remove it from the Runnables out list.
     */
-   private void stopThread()
+   public void stopThread()
    {
       mRunnableOUT.popAll();
    }
@@ -381,6 +382,11 @@ public class RunnableHost
       return cInstance;
    }
 
+   public ListView getRunnableList()
+   {
+      return mRunnableOUT.getList();
+   }
+
    /**
     * This message displays when text is entered as a runnable but it is not
     * recognised as one.
@@ -390,9 +396,7 @@ public class RunnableHost
     */
    private void showMessage(String pFirstText, String pSecondText)
    {
-      //Dialogs.showInformationDialog(mPrimaryStage, pFirstText,
-                                    //pSecondText, "Warning");
-      System.out.println(pFirstText + " " + " " + pSecondText
-                         + " ... Warning");
+      Dialogs.showInformationDialog(mPrimaryStage, pFirstText,
+                                    pSecondText, "Warning");
    }
 }
